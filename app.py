@@ -4,6 +4,8 @@ from dash.exceptions import PreventUpdate
 import base64
 import ollama
 
+ollama.pull('deepseek-r1:1.5b')
+
 app = dash.Dash(__name__)
 
 app.layout = html.Div([
