@@ -1,13 +1,14 @@
 import dash
 from dash import dcc, html, Input, Output, State, callback, no_update
 from dash.exceptions import PreventUpdate
+import dash_bootstrap_components as dbc
 import base64
 import requests
 import os
 
 api_key = os.getenv('GROQ_API_KEY') 
 
-app = dash.Dash(__name__)
+app = dash.Dash(external_stylesheets=[dbc.themes.CYBORG])
 
 app.layout = html.Div([
     dcc.Upload(
