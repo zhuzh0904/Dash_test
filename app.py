@@ -16,7 +16,7 @@ app.layout = html.Div([
         children=dbc.Button('Upload TXT File'),
         multiple=False
     ),
-    dcc.Textarea(
+    dbc.Textarea(
         id='input',
         style={'width': '100%', 'height': '400px', 'margin': '20px 0'}
     ),
@@ -24,7 +24,7 @@ app.layout = html.Div([
     dcc.Loading(
         id="loading",
         type="default",
-        children=dcc.Textarea(
+        children=dbc.Textarea(
             id='output',
             style={'width': '100%', 'height': '400px', 'margin': '20px 0'}
         )
