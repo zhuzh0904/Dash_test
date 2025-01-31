@@ -20,7 +20,7 @@ app.layout = html.Div([
         id='input',
         style={'width': '100%', 'height': '400px', 'margin': '20px 0'}
     ),
-    html.Button('Send', id='send-button'),
+    dbc.Button('Send', id='send-button'),
     dcc.Loading(
         id="loading",
         type="default",
@@ -29,7 +29,7 @@ app.layout = html.Div([
             style={'width': '100%', 'height': '400px', 'margin': '20px 0'}
         )
     ),
-    html.Button('Save', id='save-button'),
+    dbc.Button('Save', id='save-button'),
     dcc.Download(id='download-modified-txt')
 ])
 
