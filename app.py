@@ -2,9 +2,10 @@ import dash
 from dash import dcc, html, Input, Output, State, callback, no_update
 from dash.exceptions import PreventUpdate
 import base64
-import ollama
+import requests
+import os
 
-ollama.pull('deepseek-r1:1.5b')
+api_key = os.getenv('GROQ_API_KEY') 
 
 app = dash.Dash(__name__)
 
@@ -62,14 +63,18 @@ def llm_summary(n_clicks, input_value):
         return "Error: Input is empty!"
     
     try:
-        response = ollama.chat(
-            model='deepseek-r1:1.5b',
-            messages=[
-                {'role': 'system', 'content': 'Summarize in one sentence'},
-                {'role': 'user', 'content': input_value}
-            ]
+        response = requests.post(
+            "https://api.groq.com/openai/v1/chat/completions",
+            headers = {"Authorization": f"Bearer {api_key}"},
+            json = {
+                "model": "deepseek-r1-distill-llama-70b",
+                "messages":[
+                    {"role": "system", "content": "summarize in one sentence"},
+                    {"role": "user", "content": input_value}
+                ]
+            }
         )
-        return response['message']['content']
+        return response.json()["choices"][0]["message"]["content"]
     except Exception as e:
         return f"LLM Error: {str(e)}"
 
