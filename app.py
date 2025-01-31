@@ -8,7 +8,7 @@ import os
 
 api_key = os.getenv('GROQ_API_KEY') 
 
-app = dash.Dash(external_stylesheets=[dbc.themes.CYBORG])
+app = dash.Dash(external_stylesheets=[dbc.themes.MINTY])
 
 app.layout = html.Div([
     dcc.Upload(
