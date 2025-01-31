@@ -13,7 +13,7 @@ app = dash.Dash(external_stylesheets=[dbc.themes.MINTY])
 app.layout = html.Div([
     dcc.Upload(
         id='upload-txt',
-        children=html.Button('Upload TXT File'),
+        children=dbc.Button('Upload TXT File'),
         multiple=False
     ),
     dcc.Textarea(
