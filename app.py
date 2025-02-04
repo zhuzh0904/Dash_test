@@ -11,7 +11,7 @@ api_key = os.getenv('GROQ_API_KEY')
 app = dash.Dash(external_stylesheets=[dbc.themes.MINTY])
 
 app.layout = html.Div([
-    html.Div(
+    html.Div([
         dcc.Upload(
             id='upload-txt',
             children=dbc.Button('Upload TXT File'),
@@ -22,7 +22,7 @@ app.layout = html.Div([
             'deepseek-r1-distill-llama-70b',
             id = "dropdown-model"
         )
-    ),
+    ]),
     dbc.Textarea(
         id='input',
         style={'width': '100%', 'height': '400px', 'margin': '20px 0'}
