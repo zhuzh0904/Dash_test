@@ -12,16 +12,24 @@ app = dash.Dash(external_stylesheets=[dbc.themes.MINTY])
 
 app.layout = html.Div([
     html.Div([
-        dcc.Upload(
-            id='upload-txt',
-            children=dbc.Button('Upload TXT File'),
-            multiple=False
-        ),
-        dcc.Dropdown(
-            ['deepseek-r1-distill-llama-70b', 'llama-3.3-70b-versatile', 'mixtral-8x7b-32768'],
-            'deepseek-r1-distill-llama-70b',
-            id = "dropdown-model"
-        )
+        dbc.Row([
+            dbc.Col(
+                dcc.Upload(
+                    id='upload-txt',
+                    children=dbc.Button('Upload TXT File'),
+                    multiple=False
+                ),
+                width="auto"
+            ),
+            dbc.Col(
+                dcc.Dropdown(
+                    ['deepseek-r1-distill-llama-70b', 'llama-3.3-70b-versatile', 'mixtral-8x7b-32768'],
+                    'deepseek-r1-distill-llama-70b',
+                    id = "dropdown-model"
+                ),
+                width="auto"
+            )
+        ]),
     ]),
     dbc.Textarea(
         id='input',
