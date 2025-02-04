@@ -18,7 +18,7 @@ app.layout = html.Div([
             multiple=False
         ),
         dcc.Dropdown(
-            ['deepseek-r1-distill-llama-70b', 'llama-3.3-70b-versatile', 'whisper-large-v3-turbo'],
+            ['deepseek-r1-distill-llama-70b', 'llama-3.3-70b-versatile', 'mixtral-8x7b-32768'],
             'deepseek-r1-distill-llama-70b',
             id = "dropdown-model"
         )
