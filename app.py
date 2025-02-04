@@ -11,10 +11,17 @@ api_key = os.getenv('GROQ_API_KEY')
 app = dash.Dash(external_stylesheets=[dbc.themes.MINTY])
 
 app.layout = html.Div([
-    dcc.Upload(
-        id='upload-txt',
-        children=dbc.Button('Upload TXT File'),
-        multiple=False
+    html.Div(
+        dcc.Upload(
+            id='upload-txt',
+            children=dbc.Button('Upload TXT File'),
+            multiple=False
+        ),
+        dcc.Dropdown(
+            ['deepseek-r1-distill-llama-70b', 'llama-3.3-70b-versatile', 'whisper-large-v3'],
+            'deepseek-r1-distill-llama-70b',
+            id = "dropdown-model"
+        )
     ),
     dbc.Textarea(
         id='input',
@@ -56,10 +63,11 @@ def load_txt_file(contents, filename):
 @callback(
     Output('output', 'value'),
     Input('send-button', 'n_clicks'),
+    State('dropdown-model', 'value'),
     State('input', 'value'),
     prevent_initial_call=True
 )
-def llm_summary(n_clicks, input_value):
+def llm_summary(n_clicks, model_value, input_value):
     if not input_value:
         return "Error: Input is empty!"
     
@@ -68,7 +76,7 @@ def llm_summary(n_clicks, input_value):
             "https://api.groq.com/openai/v1/chat/completions",
             headers = {"Authorization": f"Bearer {api_key}"},
             json = {
-                "model": "deepseek-r1-distill-llama-70b",
+                "model": model_value,
                 "messages":[
                     {"role": "system", "content": "summarize in one sentence"},
                     {"role": "user", "content": input_value}
