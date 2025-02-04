@@ -11,6 +11,9 @@ api_key = os.getenv('GROQ_API_KEY')
 app = dash.Dash(external_stylesheets=[dbc.themes.MINTY])
 
 app.layout = html.Div([
+    html.Div(
+        html.H1("LLM Text Summarizer", style={'textAlign': 'left'})
+    ),
     html.Div([
         dbc.Row([
             dbc.Col(
