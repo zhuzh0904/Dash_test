@@ -22,10 +22,13 @@ app.layout = html.Div([
                 width="auto"
             ),
             dbc.Col(
-                dcc.Dropdown(
-                    ['deepseek-r1-distill-llama-70b', 'llama-3.3-70b-versatile', 'mixtral-8x7b-32768'],
-                    'deepseek-r1-distill-llama-70b',
-                    id = "dropdown-model"
+                dbc.Select(
+                    id = "dropdown-model",
+                    options=[
+                        {"label": "deepseek-r1-distill-llama-70b", "value": "deepseek-r1-distill-llama-70b"},
+                        {"label": "llama-3.3-70b-versatile", "value": "llama-3.3-70b-versatile"},
+                        {"label": "mixtral-8x7b-32768", "value": "mixtral-8x7b-32768"}
+                    ]
                 ),
                 width=4
             )
