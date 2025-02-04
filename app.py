@@ -27,7 +27,7 @@ app.layout = html.Div([
                     'deepseek-r1-distill-llama-70b',
                     id = "dropdown-model"
                 ),
-                width="auto"
+                width=4
             )
         ]),
     ]),
