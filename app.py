@@ -47,6 +47,7 @@ app.layout = html.Div([
     dbc.Button('Send', id='send-button'),
     dbc.Spinner(
         id="loading",
+        color="primary",
         children=dbc.Textarea(
             id='output',
             style={'width': '100%', 'height': '400px', 'margin': '20px 0'}
