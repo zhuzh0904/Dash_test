@@ -13,8 +13,13 @@ app = dash.Dash(external_stylesheets=[dbc.themes.MINTY])
 app.layout = html.Div([
     html.Div(
         [
-            html.H1("LLM Text Summarizer", style={'textAlign': 'left'}),
-            html.H3("Default behavior: summarize in one sentence", style={'textAlign': 'left'})
+            html.H2("LLM Text Summarizer", style={'textAlign': 'left'}),
+            html.H4("Default behavior:", style={'textAlign': 'left'}),
+            dbc.Textarea(
+                id = "deault-behavior",
+                value = "summary in one sentence",
+                style={'width': '40%', 'height': '10px', 'margin': '20px 0'}
+            )
         ]
     ),
     html.Div([
@@ -80,11 +85,12 @@ def load_txt_file(contents, filename):
 @callback(
     Output('output', 'value'),
     Input('send-button', 'n_clicks'),
+    State('deault-behavior', 'value'),
     State('dropdown-model', 'value'),
     State('input', 'value'),
     prevent_initial_call=True
 )
-def llm_summary(n_clicks, model_value, input_value):
+def llm_summary(n_clicks, default_behavior, model_value, input_value):
     if not input_value:
         return "Error: Input is empty!"
     
@@ -95,7 +101,7 @@ def llm_summary(n_clicks, model_value, input_value):
             json = {
                 "model": model_value,
                 "messages":[
-                    {"role": "system", "content": "summarize in one sentence"},
+                    {"role": "system", "content": default_behavior},
                     {"role": "user", "content": input_value}
                 ]
             }
