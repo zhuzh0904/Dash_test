@@ -11,48 +11,42 @@ api_key = os.getenv('GROQ_API_KEY')
 app = dash.Dash(external_stylesheets=[dbc.themes.MINTY])
 
 app.layout = html.Div([
-    html.Div(
-        [
-            html.H2("LLM Text Summarizer", style={'textAlign': 'left'}),
-            html.H4("Default behavior:", style={'textAlign': 'left'}),
-            dbc.Textarea(
-                id = "deault-behavior",
-                value = "summarize in one sentence",
-                style={'width': '40%', 'height': '10px', 'margin': '20px 0'}
-            )
-        ]
+    html.H3("LLM Text Summarizer", style={'textAlign': 'left'}),
+    html.H5("Default behavior:", style={'textAlign': 'left'}),
+    dbc.Textarea(
+        id = "deault-behavior",
+        value = "summarize in one sentence",
+        style={'width': '40%', 'height': '10px', 'margin': '20px 0'}
     ),
-    html.Div([
-        dbc.Row([
-            dbc.Col(
-                dcc.Upload(
-                    id='upload-txt',
-                    children=dbc.Button('Upload TXT File'),
-                    multiple=False
-                ),
-                width="auto"
+    html.H5("Upload TXT file (Optional) and select model:", style={'textAlign': 'left'}),
+    dbc.Row([
+        dbc.Col(
+            dcc.Upload(
+                id='upload-txt',
+                children=dbc.Button('Upload TXT File'),
+                multiple=False
             ),
-            dbc.Col(
-                dbc.Select(
-                    id = "dropdown-model",
-                    options=[
-                        {"label": "deepseek-r1-distill-llama-70b", "value": "deepseek-r1-distill-llama-70b"},
-                        {"label": "llama-3.3-70b-versatile", "value": "llama-3.3-70b-versatile"},
-                        {"label": "mixtral-8x7b-32768", "value": "mixtral-8x7b-32768"}
-                    ]
-                ),
-                width=4
-            )
-        ]),
+            width="auto"
+        ),
+        dbc.Col(
+            dbc.Select(
+                id = "dropdown-model",
+                options=[
+                    {"label": "deepseek-r1-distill-llama-70b", "value": "deepseek-r1-distill-llama-70b"},
+                    {"label": "llama-3.3-70b-versatile", "value": "llama-3.3-70b-versatile"},
+                    {"label": "mixtral-8x7b-32768", "value": "mixtral-8x7b-32768"}
+                ]
+            ),
+            width=4
+        )
     ]),
     dbc.Textarea(
         id='input',
         style={'width': '100%', 'height': '400px', 'margin': '20px 0'}
     ),
     dbc.Button('Send', id='send-button'),
-    dcc.Loading(
+    dbc.Spinner(
         id="loading",
-        type="default",
         children=dbc.Textarea(
             id='output',
             style={'width': '100%', 'height': '400px', 'margin': '20px 0'}
