@@ -17,7 +17,7 @@ app.layout = html.Div([
             html.H4("Default behavior:", style={'textAlign': 'left'}),
             dbc.Textarea(
                 id = "deault-behavior",
-                value = "summary in one sentence",
+                value = "summarize in one sentence",
                 style={'width': '40%', 'height': '10px', 'margin': '20px 0'}
             )
         ]
