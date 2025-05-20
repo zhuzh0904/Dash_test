@@ -34,7 +34,7 @@ app.layout = html.Div([
                 options=[
                     {"label": "deepseek-r1-distill-llama-70b", "value": "deepseek-r1-distill-llama-70b"},
                     {"label": "llama-3.3-70b-versatile", "value": "llama-3.3-70b-versatile"},
-                    {"label": "mixtral-8x7b-32768", "value": "mixtral-8x7b-32768"}
+                    {"label": "mistral-saba-24b", "value": "mistral-saba-24b"}
                 ]
             ),
             width=4
