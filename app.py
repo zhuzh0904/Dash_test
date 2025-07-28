@@ -6,6 +6,7 @@ import base64
 import requests
 import os
 
+# This API key is used as a secret variable in Posit Connect Cloud
 api_key = os.getenv('GROQ_API_KEY') 
 
 app = dash.Dash(external_stylesheets=[dbc.themes.MINTY])
