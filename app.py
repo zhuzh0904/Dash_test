@@ -5,9 +5,11 @@ import dash_bootstrap_components as dbc
 import base64
 import requests
 import os
+from mistralai import Mistral
 
 # This API key is used as a secret variable in Posit Connect Cloud
-api_key = os.getenv('GROQ_API_KEY') 
+api_key = os.getenv('MISTRAL_API_KEY')
+client = Mistral(api_key = api_key)
 
 app = dash.Dash(external_stylesheets=[dbc.themes.MINTY])
 
@@ -33,9 +35,7 @@ app.layout = html.Div([
             dbc.Select(
                 id = "dropdown-model",
                 options=[
-                    {"label": "deepseek-r1-distill-llama-70b", "value": "deepseek-r1-distill-llama-70b"},
-                    {"label": "llama-3.3-70b-versatile", "value": "llama-3.3-70b-versatile"},
-                    {"label": "gemma2-9b-it", "value": "gemma2-9b-it"}
+                    {"label": "mistral-large-latest", "value": "mistral-large-latest"}
                 ]
             ),
             width=4
@@ -91,18 +91,18 @@ def llm_summary(n_clicks, default_behavior, model_value, input_value):
         return "Error: Input is empty!"
     
     try:
-        response = requests.post(
-            "https://api.groq.com/openai/v1/chat/completions",
-            headers = {"Authorization": f"Bearer {api_key}"},
-            json = {
-                "model": model_value,
-                "messages":[
-                    {"role": "system", "content": default_behavior},
-                    {"role": "user", "content": input_value}
-                ]
-            }
+        response = client.chat.complete(
+            model = model_value,
+            messages = [
+                {
+                    "role": "system", "content": default_behavior
+                },
+                {
+                    "role": "user", "content": input_value
+                }
+            ]
         )
-        return response.json()["choices"][0]["message"]["content"]
+        return response.choices[0].message.content
     except Exception as e:
         return f"LLM Error: {str(e)}"
 
