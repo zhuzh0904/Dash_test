@@ -43,7 +43,8 @@ app.layout = dbc.Container([
                         id="dropdown-model",
                         options=[
                             {"label": "mistral-large-latest", "value": "mistral-large-latest"}
-                        ]
+                        ],
+                        value="mistral-large-latest"
                     ),
                     width=4
                 ),
