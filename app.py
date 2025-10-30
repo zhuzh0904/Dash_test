@@ -9,54 +9,81 @@ from mistralai import Mistral
 
 # This API key is used as a secret variable in Posit Connect Cloud
 api_key = os.getenv('MISTRAL_API_KEY')
-client = Mistral(api_key = api_key)
+client = Mistral(api_key = "api_key")
 
 app = dash.Dash(external_stylesheets=[dbc.themes.MINTY])
 
-app.layout = html.Div([
-    html.H3("LLM Text Summarizer", style={'textAlign': 'left'}),
-    html.H5("Default behavior:", style={'textAlign': 'left'}),
-    dbc.Textarea(
-        id = "deault-behavior",
-        value = "summarize in one sentence",
-        style={'width': '40%', 'height': '10px', 'margin': '20px 0'}
-    ),
-    html.H5("Upload TXT file (Optional) and select model:", style={'textAlign': 'left'}),
+app.layout = dbc.Container([
+    html.H2("LLM Text Summarizer", className="text-center my-4"),
+
+    dbc.Card([
+        dbc.CardHeader("Default Behavior"),
+        dbc.CardBody([
+            dbc.Textarea(
+                id="default-behavior",
+                value="summarize in one sentence",
+                style={'height': '60px'}
+            ),
+        ])
+    ], className="mb-4 shadow-sm"),
+
+    dbc.Card([
+        dbc.CardHeader("Upload File & Select Model"),
+        dbc.CardBody([
+            dbc.Row([
+                dbc.Col(
+                    dcc.Upload(
+                        id='upload-txt',
+                        children=dbc.Button('Upload TXT File', color="secondary"),
+                        multiple=False
+                    ),
+                    width="auto"
+                ),
+                dbc.Col(
+                    dbc.Select(
+                        id="dropdown-model",
+                        options=[
+                            {"label": "mistral-large-latest", "value": "mistral-large-latest"}
+                        ]
+                    ),
+                    width=4
+                ),
+            ]),
+        ])
+    ], className="mb-4 shadow-sm"),
+
+    dbc.Card([
+        dbc.CardHeader("Input Text"),
+        dbc.CardBody([
+            dbc.Textarea(
+                id='input',
+                style={'width': '100%', 'height': '250px'}
+            )
+        ])
+    ], className="mb-4 shadow-sm"),
+
     dbc.Row([
-        dbc.Col(
-            dcc.Upload(
-                id='upload-txt',
-                children=dbc.Button('Upload TXT File'),
-                multiple=False
-            ),
-            width="auto"
-        ),
-        dbc.Col(
-            dbc.Select(
-                id = "dropdown-model",
-                options=[
-                    {"label": "mistral-large-latest", "value": "mistral-large-latest"}
-                ]
-            ),
-            width=4
-        )
-    ]),
-    dbc.Textarea(
-        id='input',
-        style={'width': '100%', 'height': '400px', 'margin': '20px 0'}
-    ),
-    dbc.Button('Send', id='send-button'),
-    dbc.Spinner(
-        id="loading",
-        color="primary",
-        children=dbc.Textarea(
-            id='output',
-            style={'width': '100%', 'height': '400px', 'margin': '20px 0'}
-        )
-    ),
-    dbc.Button('Save', id='save-button'),
+        dbc.Col(dbc.Button('Send', id='send-button', color="primary", className="w-100"), width=3),
+        dbc.Col(dbc.Button('Save', id='save-button', color="success", className="w-100"), width=3),
+    ], className="my-3 justify-content-center"),
+
+    dbc.Card([
+        dbc.CardHeader("LLM Output"),
+        dbc.CardBody([
+            dbc.Spinner(
+                id="loading",
+                color="primary",
+                children=dbc.Textarea(
+                    id='output',
+                    style={'width': '100%', 'height': '250px'}
+                )
+            )
+        ])
+    ], className="shadow-sm"),
+
     dcc.Download(id='download-modified-txt')
-])
+], fluid=True)
+
 
 # Load uploaded file
 @callback(
@@ -81,7 +108,7 @@ def load_txt_file(contents, filename):
 @callback(
     Output('output', 'value'),
     Input('send-button', 'n_clicks'),
-    State('deault-behavior', 'value'),
+    State('default-behavior', 'value'),
     State('dropdown-model', 'value'),
     State('input', 'value'),
     prevent_initial_call=True
