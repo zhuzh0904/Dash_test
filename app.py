@@ -3,13 +3,12 @@ from dash import dcc, html, Input, Output, State, callback, no_update
 from dash.exceptions import PreventUpdate
 import dash_bootstrap_components as dbc
 import base64
-import requests
 import os
 from mistralai import Mistral
 
 # This API key is used as a secret variable in Posit Connect Cloud
 api_key = os.getenv('MISTRAL_API_KEY')
-client = Mistral(api_key = "api_key")
+client = Mistral(api_key = api_key)
 
 app = dash.Dash(external_stylesheets=[dbc.themes.MINTY])
 
